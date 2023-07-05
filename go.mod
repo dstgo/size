@@ -1,4 +1,4 @@
-module dstgo/size
+module github.com/dstgo/size
 
 go 1.20
 
