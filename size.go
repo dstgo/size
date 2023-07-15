@@ -36,7 +36,7 @@ func (s SizeMeta) Round(n int32) float64 {
 	return decimal.NewFromFloat(s.Data).Round(n).InexactFloat64()
 }
 
-func (s SizeMeta) TosString() string {
+func (s SizeMeta) String() string {
 	if _, ok := UnitMap[s.Unit]; !ok {
 		return ""
 	}
