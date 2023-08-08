@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-type Size = int64
+type Size = uint64
 
 const (
 	B  Size = 1
@@ -30,6 +30,13 @@ var UnitMap = map[Size][]string{
 type SizeMeta struct {
 	Data float64
 	Unit Size
+}
+
+func NewSize(size float64, unit Size) SizeMeta {
+	return SizeMeta{
+		Data: size,
+		Unit: unit,
+	}
 }
 
 func (s SizeMeta) Round(n int32) float64 {
