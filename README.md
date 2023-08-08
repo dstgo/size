@@ -6,7 +6,7 @@ Fast conversion between file size and string
 ## Install
 
 ```sh
-$ go get https://github.com/dstgo/size
+go get github.com/dstgo/size
 ```
 
 
