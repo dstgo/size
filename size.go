@@ -9,7 +9,28 @@ import (
 	"unicode"
 )
 
-type Unit = int
+type Unit int
+
+func (u Unit) String() string {
+	switch u {
+	case B:
+		return "B"
+	case KB:
+		return "KB"
+	case MB:
+		return "MB"
+	case GB:
+		return "GB"
+	case TB:
+		return "TB"
+	case PB:
+		return "PB"
+	case EB:
+		return "EB"
+	default:
+		return "unknown"
+	}
+}
 
 const (
 	B Unit = 1 << (iota * 10)
@@ -71,7 +92,7 @@ func (s Size) StringRound(n int32) string {
 	round := decimal.NewFromFloat(s.Data).Round(n).InexactFloat64()
 	floatStr := strconv.FormatFloat(round, 'f', -1, 64)
 
-	return fmt.Sprintf(`%s%s`, floatStr, unitsTable[s.Unit][0])
+	return fmt.Sprintf(`%s%s`, floatStr, s.Unit)
 }
 
 // String By default, only three decimal places are retained
