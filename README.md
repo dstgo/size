@@ -1,7 +1,5 @@
 # size
-Fast conversion between file size and string
-
-
+simple conversion between size and string
 
 ## install
 ```bash
