@@ -3,75 +3,57 @@ Fast conversion between file size and string
 
 
 
-## Install
-
-```sh
-go get github.com/dstgo/size
+## install
+```bash
+go get -u github.com/dstgo/size@latest
 ```
 
-
-
-## Use
-
-**conver string to size**
-
+## units
 ```go
-fmt.Println(ParseSize("1.2MB"))
-fmt.Println(ParseSize("2.3b"))
-fmt.Println(ParseSize("9.0123TB"))
+type Unit = int
 
-fmt.Println(ParseSize("abcd"))
-fmt.Println(ParseSize("MB"))
-fmt.Println(ParseSize("KB"))
-fmt.Println(ParseSize("Bk"))
-
-fmt.Println(ParseSize(""))
+const (
+	B Unit = 1 << (iota * 10)
+	KB
+	MB
+	GB
+	TB
+	PB
+	EB
+)
 ```
 
-output
-
-```
-{1.2 1048576}
-{2.3 1}
-{9.0123 1099511627776}
-{0 0}
-{0 0}
-{0 0}
-{0 0}
-{0 0}
-```
-
-
-
-**conver string t target size**
-
+## usage
 ```go
-fmt.Println(ParseTargetSize("1.221MB", KB))
-fmt.Println(ParseTargetSize("2.12gB", GB))
-```
+package main
 
+import (
+	"fmt"
+	"github.com/dstgo/size"
+)
+
+func main() {
+	s1 := size.NewInt(1, size.KB)
+	fmt.Println(s1)
+	s2 := s1.To(size.MB)
+	fmt.Println(s2)
+
+	s3, ok := size.Lookup("1.2MB")
+	if !ok {
+		panic("failed to lookup")
+	}
+	fmt.Println(s3)
+	lookupTo, ok := size.LookupTo("1.2MB", size.KB)
+	if !ok {
+		panic("failed to lookup")
+	}
+	fmt.Println(lookupTo)
+}
+```
 output
-
 ```
-{1250.304 1024}
-{2.12 1073741824}
+1KB
+0.001MB 
+1.2MB   
+1228.8KB
 ```
-
-
-
-**convert size to string**
-
-```go
-size := ParseTargetSize("1.221MB", KB)
-fmt.Println(size.TosString())
-size1 := ParseTargetSize("1231GB", MB)
-fmt.Println(size1.TosString())
-```
-
-output
-
-```
-1250.30KB
-1260544.00MB
-```
-
