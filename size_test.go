@@ -70,3 +70,18 @@ func TestLookupTo(t *testing.T) {
 		}
 	}
 }
+
+func TestSize_String(t *testing.T) {
+	samples := []struct {
+		data     Size
+		expected string
+	}{
+		{data: New(1.2, KB), expected: "1.2KB"},
+		{data: New(1.20000, KB), expected: "1.2KB"},
+		{data: New(1.2967, KB), expected: "1.297KB"},
+	}
+
+	for _, sample := range samples {
+		assert.EqualValues(t, sample.expected, sample.data.String())
+	}
+}
