@@ -63,10 +63,15 @@ func (s Size) StringRound(n int32) string {
 	if _, ok := unitsTable[s.Unit]; !ok {
 		return "unknown unit"
 	}
+
 	if n < 0 {
-		return fmt.Sprintf(`%.2f%s`, s.Data, unitsTable[s.Unit][0])
+		return fmt.Sprintf(`%f%s`, s.Data, unitsTable[s.Unit][0])
 	}
-	return fmt.Sprintf(`%.2f%s`, s.Round(n), unitsTable[s.Unit][0])
+
+	round := decimal.NewFromFloat(s.Data).Round(n).InexactFloat64()
+	floatStr := strconv.FormatFloat(round, 'f', -1, 64)
+
+	return fmt.Sprintf(`%s%s`, floatStr, unitsTable[s.Unit][0])
 }
 
 // String By default, only three decimal places are retained
