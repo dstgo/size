@@ -34,7 +34,7 @@ var unitsTable = map[Unit][]string{
 // New returns a new size
 func New(size float64, unit Unit) Size {
 	if size < 0 {
-		size = -1
+		return Size{}
 	}
 
 	return Size{
