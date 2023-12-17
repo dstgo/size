@@ -9,7 +9,7 @@ import (
 	"unicode"
 )
 
-type Unit = uint64
+type Unit = int
 
 const (
 	B Unit = 1 << (iota * 10)
@@ -41,6 +41,10 @@ func New(size float64, unit Unit) Size {
 		Data: size,
 		Unit: unit,
 	}
+}
+
+func NewInt(size int, unit Unit) Size {
+	return New(float64(size), unit)
 }
 
 // Size represents a bytes size in Unit
